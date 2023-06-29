@@ -54,8 +54,7 @@ class UserService(
             val countRoot = countQuery.from(User::class.java)
             countQuery.select(criteriaBuilder.count(countRoot))
             countQuery.where(*filter.toTypedArray(), *regex.toTypedArray())
-            val count = entityManager.createQuery(countQuery).singleResult
-            return PageableExecutionUtils.getPage(result, pageable) { count }
+            return PageableExecutionUtils.getPage(result, pageable) { entityManager.createQuery(countQuery).singleResult }
         } catch (e: Exception) {
             println(e.message)
             return Page.empty();
